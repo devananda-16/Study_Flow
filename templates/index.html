@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
+    
+    <div class="lg:col-span-1">
+        <h2 class="text-xl font-bold text-gray-800 mb-6 border-l-4 border-red-500 pl-3">Exam Timetable</h2>
+        
+        <form action="/add_exam" method="POST" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 mb-8 space-y-4">
+            <input type="text" name="subject" placeholder="Subject Name" class="w-full border p-3 rounded-xl focus:ring-2 focus:ring-red-400 outline-none" required>
+            <input type="date" name="date" class="w-full border p-3 rounded-xl focus:ring-2 focus:ring-red-400 outline-none" required>
+            <input type="time" name="time" class="w-full border p-3 rounded-xl focus:ring-2 focus:ring-red-400 outline-none">
+            <button type="submit" class="w-full bg-red-500 text-white py-3 rounded-xl font-bold hover:bg-red-600 transition shadow-lg shadow-red-100">Add Exam</button>
+        </form>
+
+        <div class="space-y-4">
+            {% for exam in exams %}
+            <div class="bg-white p-5 rounded-2xl shadow-sm border-l-8 border-red-500 hover:shadow-md transition">
+                <h3 class="font-black text-gray-800 text-lg">{{ exam.subject }}</h3>
+                <p class="text-sm text-gray-500 font-medium">{{ exam.date }} | {{ exam.time }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="lg:col-span-2">
+        <h2 class="text-xl font-bold text-gray-800 mb-6 border-l-4 border-blue-500 pl-3">Preparation Plan</h2>
+
+        <form action="/add_study_plan" method="POST" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-wrap gap-4 mb-8">
+            <select name="subject" class="flex-1 border p-3 rounded-xl bg-gray-50 outline-none">
+                {% for exam in exams %}<option value="{{ exam.subject }}">{{ exam.subject }}</option>{% endfor %}
+            </select>
+            <input type="text" name="portions" placeholder="Portions (e.g. Ch 1-5)" class="flex-[2] border p-3 rounded-xl outline-none" required>
+            <input type="date" name="deadline" class="border p-3 rounded-xl outline-none">
+            <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-100">Set Goal</button>
+        </form>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b">
+                    <tr>
+                        <th class="p-5 text-gray-500 font-bold uppercase text-xs">Subject</th>
+                        <th class="p-5 text-gray-500 font-bold uppercase text-xs">Portions</th>
+                        <th class="p-5 text-gray-500 font-bold uppercase text-xs">Target</th>
+                        <th class="p-5 text-center text-gray-500 font-bold uppercase text-xs">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for task in tasks %}
+                    <tr class="hover:bg-blue-50/50 transition">
+                        <td class="p-5 font-bold text-gray-800">{{ task.subject }}</td>
+                        <td class="p-5 text-gray-600">{{ task.portions }}</td>
+                        <td class="p-5 text-sm font-bold text-orange-600">{{ task.deadline }}</td>
+                        <td class="p-5 text-center">
+                            <a href="/delete_task/{{ task.id }}" class="text-red-500 font-black hover:bg-red-50 px-4 py-2 rounded-lg transition">DONE</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
