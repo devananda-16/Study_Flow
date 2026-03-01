@@ -7,13 +7,31 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
+    
+    <nav class="bg-white border-b sticky top-0 z-50 shadow-sm relative">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            
             <a href="{{ url_for('index') }}" class="text-2xl font-black text-blue-600 tracking-tighter italic">StudyFlow</a>
-            <div class="space-x-8 flex items-center">
-                <a href="{{ url_for('index') }}" class="text-gray-600 hover:text-blue-600 font-semibold">Dashboard</a>
-                <a href="{{ url_for('login') }}" class="text-gray-600 hover:text-blue-600 font-semibold">Login</a>
-                <a href="{{ url_for('register') }}" class="bg-blue-600 text-white px-6 py-2 rounded-full font-bold hover:bg-blue-700 transition">Get Started</a>
+            
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="{{ url_for('index') }}" class="text-gray-600 hover:text-blue-600 font-semibold transition">Dashboard</a>
+                <a href="{{ url_for('login') }}" class="text-gray-600 hover:text-blue-600 font-semibold transition">Login</a>
+                <a href="{{ url_for('register') }}" class="bg-blue-600 text-white px-6 py-2 rounded-full font-bold hover:bg-blue-700 transition shadow-md shadow-blue-200">Get Started</a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded p-1">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+
+        </div>
+
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white border-b shadow-xl md:hidden flex flex-col origin-top">
+            <a href="{{ url_for('index') }}" class="block px-6 py-4 text-gray-700 hover:text-blue-600 hover:bg-gray-50 font-semibold border-b">Dashboard</a>
+            <a href="{{ url_for('login') }}" class="block px-6 py-4 text-gray-700 hover:text-blue-600 hover:bg-gray-50 font-semibold border-b">Login</a>
+            <div class="px-6 py-5 bg-gray-50">
+                <a href="{{ url_for('register') }}" class="block w-full text-center bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-md shadow-blue-200">Get Started</a>
             </div>
         </div>
     </nav>
@@ -21,5 +39,14 @@
     <div class="container mx-auto px-4 py-8">
         {% block content %}{% endblock %}
     </div>
+
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>

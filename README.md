@@ -13,7 +13,7 @@
 - Member 2: Dazzlin Figaruz - AISAT
 
 ### Hosted Project Link
-[mention your project hosted link here]
+[ Project hosted link here](https://study-flow-9akh.onrender.com)
 
 ### Project Description
 StudyFlow is a professional study planning tool that helps students organize, manage, and track academic tasks efficiently to improve productivity and time management.
@@ -31,10 +31,11 @@ StudyFlow provides a structured digital platform where students can plan their s
 ### Technologies/Components Used
 
 **For Software:**
-- Languages used: HTML,JavaScript,CSS
+- Languages used: HTML,JavaScript, Tailwind CSS
 - Frameworks used: Flask
-- Libraries used: [e.g., axios, pandas, JUnit]
-- Tools used: VS Code,GIT
+- Libraries used: Werkzeug (Security/Hashing), SQLite3, Jinja2
+
+- Tools used: VS Code, Git, GitHub, Render
 
 ## Features
 
