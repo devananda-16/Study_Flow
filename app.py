@@ -1,3 +1,4 @@
+import os
 import sqlite3
 from functools import wraps
 from flask import Flask, render_template, request, redirect, url_for, session, flash
@@ -5,14 +6,19 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 # A secret key is required by Flask to securely sign the session cookie
+# In a real production app, you would use os.environ.get('SECRET_KEY') here
 app.secret_key = 'your_secure_random_secret_key' 
 
 # ==========================================
-# DATABASE SETUP
+# DATABASE SETUP (UPDATED FOR SERVER DEPLOYMENT)
 # ==========================================
+# Get the absolute path of the directory where app.py lives
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DB_PATH = os.path.join(BASE_DIR, 'studyflow.db')
+
 def get_db_connection():
-    conn = sqlite3.connect('studyflow.db')
-    # This allows us to access columns by name (e.g., row['subject'])
+    # Use the absolute path instead of just the file name
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row 
     return conn
 
@@ -122,7 +128,7 @@ def add_study_plan():
     return redirect(url_for('index'))
 
 # ==========================================
-# DELETE ROUTES (NEW)
+# DELETE ROUTES
 # ==========================================
 
 @app.route('/delete_exam/<int:exam_id>')
