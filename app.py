@@ -85,7 +85,10 @@ def index():
     
     # Fetch the logged-in user's details
     user = conn.execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()
-    
+    if user is None:
+        session.clear()
+        conn.close()
+        return redirect(url_for('login'))
     # Fetch only the logged-in user's data
     exams = conn.execute('SELECT * FROM exams WHERE user_id = ? ORDER BY date ASC', (user_id,)).fetchall()
     tasks = conn.execute('SELECT * FROM tasks WHERE user_id = ? ORDER BY deadline ASC', (user_id,)).fetchall()
